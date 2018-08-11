@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
+using LowLevelInput.DebuggerSupport;
 using LowLevelInput.PInvoke;
 using LowLevelInput.PInvoke.Types;
 using LowLevelInput.PInvoke.Libraries;
@@ -95,6 +97,8 @@ namespace LowLevelInput.WindowsHooks
             while (_hookThreadId == 0) Thread.Sleep(10);
 
             if (_hookHandler == IntPtr.Zero) WinApi.ThrowWin32Exception("Failed to \"SetWindowsHookEx\" with " + WindowsHookType);
+
+            DebugHelper.AddThreadId(_hookThreadId);
 
             return true;
         }
